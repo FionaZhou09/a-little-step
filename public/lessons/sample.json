@@ -1,0 +1,96 @@
+{
+  "date": "2026-07-18",
+  "title": "Fruits & Animals",
+  "villagers": [
+    { "name": "Bobo", "animal": "bear" },
+    { "name": "Mimi", "animal": "cat" },
+    { "name": "Lulu", "animal": "rabbit" },
+    { "name": "Kiki", "animal": "fox" }
+  ],
+  "words": [
+    {
+      "word": "apple",
+      "emoji": "🍎",
+      "zh": "苹果",
+      "sentence": "I like apples.",
+      "sentenceZh": "我喜欢苹果。"
+    },
+    {
+      "word": "banana",
+      "emoji": "🍌",
+      "zh": "香蕉",
+      "sentence": "The banana is yellow.",
+      "sentenceZh": "香蕉是黄色的。"
+    },
+    {
+      "word": "dog",
+      "emoji": "🐶",
+      "zh": "狗",
+      "sentence": "The dog can run.",
+      "sentenceZh": "小狗会跑。"
+    },
+    {
+      "word": "cat",
+      "emoji": "🐱",
+      "zh": "猫",
+      "sentence": "The cat says meow.",
+      "sentenceZh": "小猫喵喵叫。"
+    },
+    {
+      "word": "fish",
+      "emoji": "🐟",
+      "zh": "鱼",
+      "sentence": "Fish swim in the river.",
+      "sentenceZh": "鱼在河里游。"
+    },
+    {
+      "word": "bird",
+      "emoji": "🐦",
+      "zh": "鸟",
+      "sentence": "The bird can fly.",
+      "sentenceZh": "小鸟会飞。"
+    }
+  ],
+  "story": [
+    {
+      "speaker": "Bobo",
+      "en": "Good morning! Welcome to our island!",
+      "zh": "早上好！欢迎来到我们的小岛！"
+    },
+    {
+      "speaker": "Bobo",
+      "en": "Look! A red apple on the tree.",
+      "zh": "看！树上有一个红苹果。"
+    },
+    {
+      "speaker": "Mimi",
+      "en": "I see a dog! The dog runs fast.",
+      "zh": "我看到一只狗！狗狗跑得很快。"
+    },
+    {
+      "speaker": "Mimi",
+      "en": "And a little cat says meow, meow!",
+      "zh": "还有一只小猫，喵喵叫！"
+    },
+    {
+      "speaker": "Lulu",
+      "en": "A fish swims in the river. Splash!",
+      "zh": "一条鱼在河里游，扑通！"
+    },
+    {
+      "speaker": "Lulu",
+      "en": "A bird flies in the blue sky.",
+      "zh": "一只鸟在蓝天上飞。"
+    },
+    {
+      "speaker": "Kiki",
+      "en": "Hi! I am Kiki the fox. Let's play!",
+      "zh": "你好！我是小狐狸 Kiki，我们一起玩吧！"
+    },
+    {
+      "speaker": "Bobo",
+      "en": "Let's eat a banana together!",
+      "zh": "我们一起吃根香蕉吧！"
+    }
+  ]
+}

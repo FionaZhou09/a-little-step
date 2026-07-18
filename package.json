@@ -1,0 +1,21 @@
+{
+  "name": "a-little-step",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test:e2e": "node scripts/e2e/run.mjs"
+  },
+  "dependencies": {
+    "three": "^0.185.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0",
+    "puppeteer-core": "^25.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5"
+  }
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>A Little Step · 每天一小步</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏝️%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+
+    <div id="hud">
+      <!-- 顶栏：星星 / 今日课程 / 家长入口 -->
+      <div id="topbar">
+        <div class="pill" id="stars-pill">⭐ <span id="stars-count">0</span></div>
+        <div class="pill" id="apples-pill" title="吃一个苹果（F）">🍎 <span id="apples-count">0</span></div>
+        <div class="pill" id="fish-pill">🐟 <span id="fish-count">0</span></div>
+        <div class="pill" id="lesson-pill">📖 <span id="lesson-title">今日课程</span></div>
+        <button class="pill btn" id="btn-parent" title="导入今日课程">⚙️ 家长</button>
+      </div>
+
+      <!-- 今日单词任务卡 -->
+      <div id="task-card">
+        <div class="task-title">今日单词</div>
+        <ul id="task-list"></ul>
+      </div>
+
+      <!-- 交互提示 -->
+      <div id="interact-prompt" class="hidden"><span class="key">E</span> <span id="interact-text">和 TA 聊聊</span></div>
+
+      <!-- 对话框 -->
+      <div id="dialog" class="hidden">
+        <div id="dialog-name">Bobo</div>
+        <div id="dialog-en"></div>
+        <div id="dialog-zh"></div>
+        <div class="dialog-hint">点一下继续 ▸</div>
+      </div>
+
+      <!-- 单词卡弹层 -->
+      <div id="wordcard" class="hidden">
+        <div id="wordcard-emoji">🍎</div>
+        <div id="wordcard-word">apple</div>
+        <div id="wordcard-zh">苹果</div>
+        <div id="wordcard-sentence"></div>
+        <button class="big-btn" id="wordcard-listen">🔊 再听一遍</button>
+        <button class="big-btn primary" id="wordcard-ok">我学会啦 ✓</button>
+      </div>
+
+      <!-- 听音选词 quiz -->
+      <div id="quiz" class="hidden">
+        <div id="quiz-prompt">🔊 听一听，点一点</div>
+        <button class="big-btn" id="quiz-listen">🔊 再听一遍</button>
+        <div id="quiz-options"></div>
+      </div>
+
+      <!-- 渔获卡弹层 -->
+      <div id="catch-card" class="hidden">
+        <div id="catch-emoji">🐟</div>
+        <div id="catch-name">bass</div>
+        <div id="catch-zh">鲈鱼</div>
+        <div id="catch-line">You caught a bass!</div>
+        <button class="big-btn primary" id="catch-ok">太棒了！</button>
+      </div>
+
+      <!-- 中央横幅（庆典/提示） -->
+      <div id="banner" class="hidden"></div>
+
+      <!-- toast 容器 -->
+      <div id="toasts"></div>
+
+      <!-- 触屏控件 -->
+      <div id="joystick" class="hidden"><div id="joystick-knob"></div></div>
+      <button id="btn-interact" class="hidden">💬</button>
+      <button id="btn-fish" class="hidden">🎣</button>
+
+      <!-- 家长面板：导入课程包 -->
+      <div id="parent-panel" class="hidden">
+        <div class="panel-card">
+          <div class="panel-title">导入今日课程</div>
+          <div class="panel-steps">
+            <div class="step">
+              <span class="step-no">1</span>
+              <button class="big-btn primary" id="btn-copy-prompt">📋 复制提示词</button>
+            </div>
+            <!-- 自动复制失败时显示：家长手动全选复制 -->
+            <div id="prompt-fallback" class="hidden">
+              <p class="fallback-tip">👇 自动复制没成功，请点下面的框，全选（Ctrl/⌘+A）后复制（Ctrl/⌘+C）：</p>
+              <textarea id="prompt-manual" readonly></textarea>
+            </div>
+            <div class="step">
+              <span class="step-no">2</span>
+              <p>把提示词和孩子的课表（PDF / 截图 / 照片）一起发给 Kimi 或 ChatGPT</p>
+            </div>
+            <div class="step">
+              <span class="step-no">3</span>
+              <p>把 AI 返回的 JSON 完整复制，粘贴到下面：</p>
+            </div>
+          </div>
+          <textarea id="import-text" placeholder='{"date":"...","title":"...","words":[...],"story":[...]}'></textarea>
+          <div id="import-error"></div>
+          <div class="panel-actions">
+            <button class="big-btn primary" id="btn-import-text">导入</button>
+            <button class="big-btn" id="btn-import-file">选择 .json 文件</button>
+            <button class="big-btn" id="btn-reset-lesson">恢复示例课程</button>
+            <button class="big-btn" id="btn-close-parent">关闭</button>
+          </div>
+          <input type="file" id="import-file" accept=".json,application/json" class="hidden" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 进出小屋的黑屏过渡 -->
+    <div id="fade"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

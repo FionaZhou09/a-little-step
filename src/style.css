@@ -1,0 +1,776 @@
+/**
+ * style.css — 圆角奶油风 HUD。
+ * #hud 整体不拦截鼠标（pointer-events:none），可交互子元素单独打开。
+ */
+
+:root {
+  --paper: rgba(255, 253, 246, 0.94);
+  --ink: #5b4632;
+  --ink-soft: rgba(91, 70, 50, 0.65);
+  --accent: #ff9f43;
+  --accent-dark: #e8890c;
+  --shadow: 0 6px 20px rgba(91, 70, 50, 0.18);
+  --elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --font: "Baloo 2", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  color: var(--ink);
+  background: #a8ddf0;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  display: block;
+  touch-action: none;
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------- 顶栏胶囊 ---------- */
+#topbar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pill {
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+
+#lesson-pill {
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pill.btn {
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  color: var(--ink);
+  margin-left: auto;
+  pointer-events: auto;
+  transition: transform 0.15s var(--elastic);
+}
+.pill.btn:hover {
+  transform: scale(1.06);
+}
+
+/* ---------- 今日单词任务卡 ---------- */
+#task-card {
+  position: absolute;
+  top: 62px;
+  right: 12px;
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 12px 14px;
+  min-width: 150px;
+  box-shadow: var(--shadow);
+}
+
+.task-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+#task-list {
+  list-style: none;
+}
+#task-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.task-state {
+  margin-left: auto;
+}
+
+/* ---------- 交互提示 ---------- */
+#interact-prompt {
+  position: absolute;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  animation: pop 0.25s var(--elastic);
+}
+#interact-prompt .key {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 1px 9px;
+  margin-right: 6px;
+  box-shadow: 0 2px 0 var(--accent-dark);
+}
+
+/* ---------- 对话框 ---------- */
+#dialog {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, 92vw);
+  background: var(--paper);
+  border-radius: 22px;
+  padding: 16px 22px 14px;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  cursor: pointer;
+  animation: pop 0.3s var(--elastic);
+}
+#dialog-name {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 14px;
+  font-size: 14px;
+  font-weight: 800;
+}
+#dialog-en {
+  margin-top: 8px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+#dialog-zh {
+  margin-top: 3px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+.dialog-hint {
+  margin-top: 8px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* ---------- 单词卡弹层 ---------- */
+#wordcard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(400px, 90vw);
+  background: var(--paper);
+  border-radius: 26px;
+  padding: 26px 24px 22px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  animation: pop 0.35s var(--elastic);
+}
+#wordcard-emoji {
+  font-size: 88px;
+  line-height: 1.1;
+}
+#wordcard-word {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent-dark);
+  margin-top: 4px;
+}
+#wordcard-zh {
+  font-size: 19px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+#wordcard-sentence {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 10px 0 16px;
+  line-height: 1.5;
+}
+
+/* ---------- 大按钮 ---------- */
+.big-btn {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 18px;
+  background: #f0e6d2;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(91, 70, 50, 0.15);
+  transition: transform 0.15s var(--elastic);
+}
+.big-btn:hover {
+  transform: scale(1.03);
+}
+.big-btn:active {
+  transform: scale(0.97);
+}
+.big-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--accent-dark);
+}
+
+/* ---------- quiz ---------- */
+#quiz {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(480px, 92vw);
+  background: var(--paper);
+  border-radius: 26px;
+  padding: 22px 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  animation: pop 0.35s var(--elastic);
+}
+#quiz-prompt {
+  font-size: 22px;
+  font-weight: 800;
+}
+#quiz .big-btn {
+  min-height: 48px;
+  font-size: 15px;
+  width: auto;
+  display: inline-block;
+  padding: 0 20px;
+}
+#quiz-options {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.quiz-option {
+  width: 110px;
+  height: 110px;
+  border: 4px solid transparent;
+  border-radius: 22px;
+  background: #fff;
+  font-size: 56px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s var(--elastic);
+}
+.quiz-option:hover {
+  transform: scale(1.08);
+}
+.quiz-option.correct {
+  border-color: #6fbf5a;
+  animation: pop 0.4s var(--elastic);
+}
+.quiz-option.wrong {
+  border-color: #e08585;
+  animation: shake 0.4s ease;
+}
+
+/* ---------- 渔获卡 ---------- */
+#catch-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(380px, 90vw);
+  background: var(--paper);
+  border-radius: 26px;
+  padding: 26px 24px 22px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  animation: pop-center 0.35s var(--elastic);
+}
+#catch-emoji {
+  font-size: 88px;
+  line-height: 1.1;
+}
+#catch-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent-dark);
+  margin-top: 4px;
+}
+#catch-zh {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+#catch-line {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 10px 0 6px;
+}
+
+/* ---------- 钓鱼按钮（仅划船时显示） ---------- */
+#btn-fish {
+  position: absolute;
+  right: 20px;
+  bottom: 186px;
+  width: 76px;
+  height: 76px;
+  border: none;
+  border-radius: 50%;
+  background: #5ba8e8;
+  font-size: 34px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #3a7ec9, var(--shadow);
+  pointer-events: auto;
+}
+#btn-fish:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #3a7ec9, var(--shadow);
+}
+
+/* ---------- 咬钩 ❗ ---------- */
+.bite-mark {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 42px;
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.9);
+  animation: hint-bob 0.5s ease-in-out infinite alternate;
+}
+
+/* ---------- 横幅 / toast ---------- */
+#banner {
+  position: absolute;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), #ff7e5f);
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-size: 21px;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  animation: pop 0.4s var(--elastic);
+}
+
+#toasts {
+  position: absolute;
+  bottom: 190px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.toast {
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  animation: toast-in 0.3s var(--elastic);
+  transition: opacity 0.4s ease;
+}
+.toast.out {
+  opacity: 0;
+}
+
+/* ---------- 彩带 ---------- */
+.confetti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  z-index: 60;
+  pointer-events: none;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+/* ---------- 村民头顶名牌（❓ 角标 = 复习阶段） ---------- */
+#hint-3d {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.nameplate {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+.np-quiz {
+  position: absolute;
+  top: -16px;
+  right: -10px;
+  font-size: 20px;
+  animation: hint-bob 1s ease-in-out infinite alternate;
+}
+
+/* ---------- 顶栏 🍎 胶囊（可点） ---------- */
+#apples-pill {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.15s var(--elastic);
+}
+#apples-pill:hover {
+  transform: scale(1.06);
+}
+
+/* ---------- 进出小屋的黑屏过渡 ---------- */
+#fade {
+  position: fixed;
+  inset: 0;
+  background: #2b1d16;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 80;
+}
+#fade.on {
+  opacity: 1;
+}
+
+/* ---------- 触屏控件 ---------- */
+#joystick {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+#joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+#btn-interact {
+  position: absolute;
+  right: 20px;
+  bottom: 96px;
+  width: 76px;
+  height: 76px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  font-size: 34px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--accent-dark), var(--shadow);
+  pointer-events: auto;
+}
+#btn-interact:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--accent-dark), var(--shadow);
+}
+
+/* ---------- 家长面板 ---------- */
+#parent-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(60, 40, 20, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 70;
+}
+.panel-card {
+  width: min(560px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border-radius: 24px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  animation: pop 0.3s var(--elastic);
+}
+.panel-title {
+  font-size: 22px;
+  font-weight: 800;
+}
+.panel-steps {
+  margin: 10px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.panel-steps .step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.panel-steps .step p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.step-no {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--accent, #f2a04e);
+  color: #fff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#btn-copy-prompt {
+  width: auto;
+  min-height: 44px;
+  margin-top: 0;
+  padding: 0 18px;
+  font-size: 15px;
+}
+#prompt-fallback {
+  margin: 2px 0 12px 36px;
+}
+.fallback-tip {
+  font-size: 13px;
+  color: #b0503c;
+  margin-bottom: 6px;
+}
+#prompt-manual {
+  width: 100%;
+  height: 110px;
+  border: 2px solid #e8a04e;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fffdf6;
+  color: var(--ink);
+}
+#import-text {
+  width: 100%;
+  height: 150px;
+  border: 2px solid #e8dcc4;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  color: var(--ink);
+  resize: vertical;
+  background: #fff;
+}
+#import-text:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+#import-error {
+  min-height: 22px;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #d9534f;
+  line-height: 1.5;
+}
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.panel-actions .big-btn {
+  width: auto;
+  flex: 1 1 40%;
+  min-height: 52px;
+  margin-top: 0;
+  font-size: 15px;
+  padding: 0 14px;
+}
+
+/* ---------- 动画 ---------- */
+/* 入场动画按元素的静止 transform 分三组，避免动画首帧跳变 */
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+/* 居中弹层（静止时带 translate(-50%,-50%)） */
+#wordcard,
+#quiz {
+  animation-name: pop-center;
+}
+@keyframes pop-center {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+}
+/* 横幅（静止时带 translateX(-50%)） */
+#banner {
+  animation-name: pop-banner;
+}
+@keyframes pop-banner {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.7);
+  }
+}
+/* 对话框/提示条（从下方浮起） */
+#dialog,
+#interact-prompt {
+  animation-name: pop-flat;
+}
+@keyframes pop-flat {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px) scale(0.9);
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.85);
+  }
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(112vh) rotate(720deg);
+  }
+}
+@keyframes hint-bob {
+  from {
+    margin-top: 0;
+  }
+  to {
+    margin-top: -10px;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-7px);
+  }
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+/* ---------- 移动端（≤720px） ---------- */
+@media (max-width: 720px) {
+  #task-card {
+    min-width: 0;
+    max-width: 128px;
+    padding: 8px 10px;
+  }
+  #task-list li {
+    font-size: 13px;
+    gap: 4px;
+  }
+  .task-title {
+    font-size: 11px;
+  }
+  .pill {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  /* 对话框抬高，别挡左下摇杆 */
+  #dialog {
+    bottom: 150px;
+    padding: 12px 16px 10px;
+  }
+  #dialog-en {
+    font-size: 20px;
+  }
+  #banner {
+    font-size: 16px;
+    padding: 9px 18px;
+    max-width: 92vw;
+    white-space: normal;
+    text-align: center;
+  }
+  #interact-prompt {
+    bottom: 240px;
+  }
+  #toasts {
+    bottom: 300px;
+  }
+  /* quiz 卡片竖排 */
+  #quiz-options {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .quiz-option {
+    width: 96px;
+    height: 96px;
+    font-size: 48px;
+  }
+  #wordcard-emoji {
+    font-size: 80px;
+  }
+  #btn-interact {
+    bottom: 120px;
+  }
+  #btn-fish {
+    bottom: 210px;
+  }
+}
